@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Reservas</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'criar_reserva' %}" class="button-link">Nova reserva</a>
+        {% endif %}
+    </section>
+
+    <section class="section">
+        <table class="list-table">
+            <thead>
+                <tr>
+                    <th>Locação</th>
+                    <th>Entrada</th>
+                    <th>Saída</th>
+                    <th>Valor total</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reserva in reservas %}
+                    <tr>
+                        <td>{{ reserva.fk_locacao.nome }}</td>
+                        <td>{{ reserva.data_entrada }}</td>
+                        <td>{{ reserva.data_saida }}</td>
+                        <td>R$ {{ reserva.valor_total }}</td>
+                        <td>{{ reserva.status }}</td>
+                        <td><a href="{% url 'detalhar_reserva' reserva.id %}">Detalhes</a></td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="6">Nenhuma reserva encontrada.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Editar locação</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Salvar alterações</button>
+            <a href="{% url 'detalhar_locacao' locacao.id %}" class="button-link secondary">Cancelar</a>
+        </form>
+    </section>
+{% endblock %}

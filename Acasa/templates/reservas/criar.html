@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Criar reserva</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Confirmar reserva</button>
+            <a href="{% url 'listar_reservas' %}" class="button-link secondary">Voltar</a>
+        </form>
+    </section>
+{% endblock %}

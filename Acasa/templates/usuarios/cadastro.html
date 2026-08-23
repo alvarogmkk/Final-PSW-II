@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Cadastro</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Cadastrar</button>
+            <a href="{% url 'login_usuario' %}" class="button-link secondary">Voltar para login</a>
+        </form>
+    </section>
+{% endblock %}

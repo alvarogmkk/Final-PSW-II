@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Excluir locação</h1>
+        <p>Tem certeza que deseja excluir a locação <strong>{{ locacao.nome }}</strong>?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirmar exclusão</button>
+            <a href="{% url 'detalhar_locacao' locacao.id %}" class="button-link secondary">Cancelar</a>
+        </form>
+    </section>
+{% endblock %}

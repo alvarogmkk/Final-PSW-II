@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>{{ locacao.nome }}</h1>
+        <div class="detail-layout">
+            <div>
+                <p><strong>Categoria:</strong> {{ locacao.fk_categoria.nome }}</p>
+                <p><strong>Local:</strong> {{ locacao.local }}</p>
+                <p><strong>Endereço:</strong> {{ locacao.endereco }}</p>
+                <p><strong>Capacidade máxima:</strong> {{ locacao.capacidade_maxima }} pessoas</p>
+                <p><strong>Valor da diária:</strong> R$ {{ locacao.preco_diaria }}</p>
+                <p>{{ locacao.descricao }}</p>
+
+                {% if user.is_authenticated %}
+                    <div class="inline-actions">
+                        <a href="{% url 'criar_reserva' %}?locacao={{ locacao.id }}" class="button-link">Reservar</a>
+                        <a href="{% url 'editar_locacao' locacao.id %}" class="button-link secondary">Editar</a>
+                        <a href="{% url 'excluir_locacao' locacao.id %}" class="button-link secondary">Excluir</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div>
+                <h3>Imagens</h3>
+                {% if imagens %}
+                    <div class="image-gallery">
+                        {% for imagem in imagens %}
+                            <img src="{{ imagem.url }}" alt="{{ imagem.descricao }}">
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>Sem imagens cadastradas.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

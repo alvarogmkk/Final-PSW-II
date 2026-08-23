@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Categorias</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'criar_categoria' %}" class="button-link">Nova categoria</a>
+        {% endif %}
+    </section>
+
+    <section class="section">
+        <table class="list-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categoria in categorias %}
+                    <tr>
+                        <td>{{ categoria.nome }}</td>
+                        <td>{{ categoria.tipo_locacao }}</td>
+                        <td>{{ categoria.descricao|default:'Sem descrição' }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">Nenhuma categoria cadastrada.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Bem-vindo ao ACasa</h1>
+        <p>Explore as melhores locações para sua próxima estadia.</p>
+    </section>
+
+    <section class="section">
+        <h2>Locações em destaque</h2>
+        <div class="card-grid">
+            {% for locacao in locacoes %}
+                <div class="card">
+                    <h3>{{ locacao.nome }}</h3>
+                    <p><strong>Categoria:</strong> {{ locacao.fk_categoria.nome }}</p>
+                    <p><strong>Local:</strong> {{ locacao.local }}</p>
+                    <p><strong>Preço:</strong> R$ {{ locacao.preco_diaria }}</p>
+                    <a href="{% url 'detalhar_locacao' locacao.id %}" class="button-link">Detalhes</a>
+                </div>
+            {% empty %}
+                <p>Nenhuma locação cadastrada no momento.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Categorias</h2>
+        <div class="card-grid">
+            {% for categoria in categorias %}
+                <div class="card small-card">
+                    <h3>{{ categoria.nome }}</h3>
+                    <p>{{ categoria.tipo_locacao }}</p>
+                </div>
+            {% empty %}
+                <p>Nenhuma categoria cadastrada.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

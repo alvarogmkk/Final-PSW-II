@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Login</h1>
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                <label for="username">Usuário</label>
+                <input type="text" name="username" id="username" required>
+            </p>
+            <p>
+                <label for="password">Senha</label>
+                <input type="password" name="password" id="password" required>
+            </p>
+            <button type="submit">Entrar</button>
+            <a href="{% url 'cadastro_usuario' %}" class="button-link secondary">Criar conta</a>
+        </form>
+    </section>
+{% endblock %}
