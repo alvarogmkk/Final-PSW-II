@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>{{ categoria.nome }}</h1>
+        <div class="card">
+            <p><strong>ID:</strong> {{ categoria.id }}</p>
+            <p><strong>Nome:</strong> {{ categoria.nome }}</p>
+            <p><strong>Descricao:</strong> {{ categoria.descricao|default:'Sem descricao' }}</p>
+            <p><strong>Tipo de locacao:</strong> {{ categoria.tipo_locacao }}</p>
+            <div class="inline-actions">
+                <a href="{% url 'listar_categorias' %}" class="button-link secondary">Voltar</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'editar_categoria' categoria.id %}" class="button-link">Editar</a>
+                    <a href="{% url 'excluir_categoria' categoria.id %}" class="button-link secondary">Excluir</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

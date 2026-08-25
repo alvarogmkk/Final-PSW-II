@@ -11,6 +11,11 @@
             <p><strong>Valor total:</strong> R$ {{ reserva.valor_total }}</p>
             <p><strong>Status:</strong> {{ reserva.status }}</p>
             <p><strong>Pagamento:</strong> {{ reserva.fk_pagamento.metodo }} | {{ reserva.fk_pagamento.status }}</p>
+            <div class="inline-actions">
+                <a href="{% url 'listar_reservas' %}" class="button-link secondary">Voltar</a>
+                <a href="{% url 'editar_reserva' reserva.id %}" class="button-link">Editar</a>
+                <a href="{% url 'excluir_reserva' reserva.id %}" class="button-link secondary">Excluir</a>
+            </div>
         </div>
     </section>
 {% endblock %}

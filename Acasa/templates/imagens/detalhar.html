@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Detalhes da imagem</h1>
+        <div class="detail-layout">
+            <div class="card">
+                <p><strong>ID:</strong> {{ imagem.id }}</p>
+                <p><strong>URL:</strong> {{ imagem.url }}</p>
+                <p><strong>Descricao:</strong> {{ imagem.descricao|default:'Sem descricao' }}</p>
+                <p><strong>Ordem:</strong> {{ imagem.ordem }}</p>
+                <p><strong>Principal:</strong> {{ imagem.principal }}</p>
+                <p><strong>Locacao:</strong> {{ imagem.fk_locacao.nome }}</p>
+                <div class="inline-actions">
+                    <a href="{% url 'listar_imagens' %}" class="button-link secondary">Voltar</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'editar_imagem' imagem.id %}" class="button-link">Editar</a>
+                        <a href="{% url 'excluir_imagem' imagem.id %}" class="button-link secondary">Excluir</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div>
+                <img src="{{ imagem.url }}" alt="{{ imagem.descricao }}" class="preview-image">
+            </div>
+        </div>
+    </section>
+{% endblock %}

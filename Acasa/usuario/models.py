@@ -3,8 +3,8 @@ from django.db import models
 
 
 class Usuario(User):
-    telefone = models.CharField(max_length=20)
-    CPF = models.CharField(max_length=11, unique=True)
+    telefone = models.BigIntegerField()
+    CPF = models.BigIntegerField(unique=True)
     criado_em = models.DateField(auto_now_add=True)
 
     def __str__(self):

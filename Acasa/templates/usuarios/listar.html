@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Usuarios</h1>
+        <a href="{% url 'criar_usuario' %}" class="button-link">Novo usuario</a>
+    </section>
+
+    <section class="section">
+        <table class="list-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>CPF</th>
+                    <th>Acoes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.id }}</td>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.get_full_name|default:'-' }}</td>
+                        <td>{{ usuario.email|default:'-' }}</td>
+                        <td>{{ usuario.telefone }}</td>
+                        <td>{{ usuario.CPF }}</td>
+                        <td>
+                            <a href="{% url 'detalhar_usuario' usuario.id %}">Detalhes</a>
+                            | <a href="{% url 'editar_usuario' usuario.id %}">Editar</a>
+                            | <a href="{% url 'excluir_usuario' usuario.id %}">Excluir</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7">Nenhum usuario cadastrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

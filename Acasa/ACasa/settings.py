@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'usuario.apps.UsuarioConfig',
     'categoria.apps.CategoriaConfig',
     'locacao.apps.LocacaoConfig',
+    'imagens.apps.ImagensConfig',
     'pagamento.apps.PagamentoConfig',
     'reserva.apps.ReservaConfig',
 ]
@@ -121,3 +122,4 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+LOGIN_URL = 'login_usuario'

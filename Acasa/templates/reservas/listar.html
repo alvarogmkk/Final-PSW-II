@@ -28,7 +28,11 @@
                         <td>{{ reserva.data_saida }}</td>
                         <td>R$ {{ reserva.valor_total }}</td>
                         <td>{{ reserva.status }}</td>
-                        <td><a href="{% url 'detalhar_reserva' reserva.id %}">Detalhes</a></td>
+                        <td>
+                            <a href="{% url 'detalhar_reserva' reserva.id %}">Detalhes</a>
+                            | <a href="{% url 'editar_reserva' reserva.id %}">Editar</a>
+                            | <a href="{% url 'excluir_reserva' reserva.id %}">Excluir</a>
+                        </td>
                     </tr>
                 {% empty %}
                     <tr>

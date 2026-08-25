@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Imagens</h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'criar_imagem' %}" class="button-link">Nova imagem</a>
+        {% endif %}
+    </section>
+
+    <section class="section">
+        <div class="card-grid">
+            {% for imagem in imagens %}
+                <div class="card">
+                    <img src="{{ imagem.url }}" alt="{{ imagem.descricao }}" class="card-image">
+                    <h3>{{ imagem.fk_locacao.nome }}</h3>
+                    <p><strong>Descricao:</strong> {{ imagem.descricao|default:'Sem descricao' }}</p>
+                    <p><strong>Ordem:</strong> {{ imagem.ordem }}</p>
+                    <p><strong>Principal:</strong> {{ imagem.principal }}</p>
+                    <div class="inline-actions">
+                        <a href="{% url 'detalhar_imagem' imagem.id %}" class="button-link">Detalhes</a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'editar_imagem' imagem.id %}" class="button-link secondary">Editar</a>
+                            <a href="{% url 'excluir_imagem' imagem.id %}" class="button-link secondary">Excluir</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <p>Nenhuma imagem cadastrada.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

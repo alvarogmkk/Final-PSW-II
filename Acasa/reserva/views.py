@@ -1,5 +1,4 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from pagamento.models import Pagamento
@@ -9,40 +8,42 @@ from .forms import ReservaForm
 from .models import Reserva
 
 
-@login_required
 def criar_reserva(request):
     if request.method == 'POST':
         form = ReservaForm(request.POST)
         if form.is_valid():
-            usuario = get_object_or_404(Usuario, pk=request.user.pk)
-            dados = form.cleaned_data
-            dias = (dados['data_saida'] - dados['data_entrada']).days
-            valor_total = dias * dados['fk_locacao'].preco_diaria
-
-            pagamento = Pagamento.objects.create(
-                valor=valor_total,
-                status='pendente',
-                metodo='pix',
-            )
-
             reserva = form.save(commit=False)
-            reserva.fk_usuario = usuario
-            reserva.valor_total = valor_total
-            reserva.status = 'pendente'
-            reserva.fk_pagamento = pagamento
+            preencher_valor_total(reserva)
+
+            if reserva.fk_pagamento is None:
+                reserva.fk_pagamento = Pagamento.objects.create(
+                    valor=reserva.valor_total,
+                    status='pendente',
+                    metodo='pix',
+                )
+
             reserva.save()
 
             messages.success(request, 'Reserva criada com sucesso!')
             return redirect('listar_reservas')
     else:
-        form = ReservaForm()
+        initial = {}
+        locacao_id = request.GET.get('locacao')
+        if locacao_id:
+            initial['fk_locacao'] = locacao_id
+
+        try:
+            initial['fk_usuario'] = Usuario.objects.get(pk=request.user.pk)
+        except Usuario.DoesNotExist:
+            pass
+
+        form = ReservaForm(initial=initial)
 
     return render(request, 'reservas/criar.html', {'form': form})
 
 
-@login_required
 def listar_reservas(request):
-    if request.user.is_staff:
+    if not request.user.is_authenticated or request.user.is_staff:
         reservas = Reserva.objects.select_related('fk_usuario', 'fk_locacao', 'fk_pagamento').all()
     else:
         usuario = get_object_or_404(Usuario, pk=request.user.pk)
@@ -55,15 +56,57 @@ def listar_reservas(request):
     return render(request, 'reservas/listar.html', {'reservas': reservas})
 
 
-@login_required
 def detalhar_reserva(request, id):
     reserva = get_object_or_404(
         Reserva.objects.select_related('fk_usuario', 'fk_locacao', 'fk_pagamento'),
         pk=id,
     )
 
-    if not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
+    if request.user.is_authenticated and not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
         messages.error(request, 'Voce nao tem permissao para acessar esta reserva.')
         return redirect('listar_reservas')
 
     return render(request, 'reservas/detalhar.html', {'reserva': reserva})
+
+
+def editar_reserva(request, id):
+    reserva = get_object_or_404(Reserva, pk=id)
+
+    if request.user.is_authenticated and not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
+        messages.error(request, 'Voce nao tem permissao para editar esta reserva.')
+        return redirect('listar_reservas')
+
+    if request.method == 'POST':
+        form = ReservaForm(request.POST, instance=reserva)
+        if form.is_valid():
+            reserva = form.save(commit=False)
+            preencher_valor_total(reserva)
+            reserva.save()
+            messages.success(request, 'Reserva atualizada com sucesso!')
+            return redirect('detalhar_reserva', id=reserva.id)
+    else:
+        form = ReservaForm(instance=reserva)
+
+    return render(request, 'reservas/editar.html', {'form': form, 'reserva': reserva})
+
+
+def excluir_reserva(request, id):
+    reserva = get_object_or_404(Reserva, pk=id)
+
+    if request.user.is_authenticated and not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
+        messages.error(request, 'Voce nao tem permissao para excluir esta reserva.')
+        return redirect('listar_reservas')
+
+    if request.method == 'POST':
+        reserva.delete()
+        messages.success(request, 'Reserva excluida com sucesso!')
+        return redirect('listar_reservas')
+
+    return render(request, 'reservas/excluir.html', {'reserva': reserva})
+
+def preencher_valor_total(reserva):
+    if reserva.valor_total:
+        return
+
+    dias = (reserva.data_saida - reserva.data_entrada).days
+    reserva.valor_total = dias * reserva.fk_locacao.preco_diaria

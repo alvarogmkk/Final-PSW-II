@@ -5,17 +5,55 @@ from .models import Usuario
 
 
 class UsuarioForm(forms.ModelForm):
+    password = forms.CharField(
+        label='Senha',
+        required=False,
+        widget=forms.PasswordInput(),
+        help_text='Obrigatoria para criar usuario. Deixe em branco para manter a senha atual.',
+    )
+
     class Meta:
         model = Usuario
-        fields = ['telefone', 'CPF']
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password',
+            'telefone',
+            'CPF',
+            'groups',
+            'user_permissions',
+        ]
+        widgets = {
+            'groups': forms.CheckboxSelectMultiple(),
+            'user_permissions': forms.CheckboxSelectMultiple(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password'].required = self.instance.pk is None
+
+    def save(self, commit=True):
+        usuario = super().save(commit=False)
+        password = self.cleaned_data.get('password')
+
+        if password:
+            usuario.set_password(password)
+
+        if commit:
+            usuario.save()
+            self.save_m2m()
+
+        return usuario
 
 
 class CadastroForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False)
     last_name = forms.CharField(max_length=30, required=False)
     email = forms.EmailField(required=True)
-    telefone = forms.CharField(max_length=20)
-    CPF = forms.CharField(max_length=11)
+    telefone = forms.IntegerField()
+    CPF = forms.IntegerField()
 
     class Meta:
         model = Usuario

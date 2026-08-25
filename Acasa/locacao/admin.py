@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import Imagem, Locacao
+from .models import Locacao
 
 
 admin.site.register(Locacao)
-admin.site.register(Imagem)

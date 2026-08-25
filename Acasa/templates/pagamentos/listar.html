@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Pagamentos</h1>
+        <a href="{% url 'criar_pagamento' %}" class="button-link">Novo pagamento</a>
+    </section>
+
+    <section class="section">
+        <table class="list-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Valor</th>
+                    <th>Status</th>
+                    <th>Metodo</th>
+                    <th>Acoes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pagamento in pagamentos %}
+                    <tr>
+                        <td>{{ pagamento.id }}</td>
+                        <td>R$ {{ pagamento.valor }}</td>
+                        <td>{{ pagamento.status }}</td>
+                        <td>{{ pagamento.metodo }}</td>
+                        <td>
+                            <a href="{% url 'detalhar_pagamento' pagamento.id %}">Detalhes</a>
+                            | <a href="{% url 'editar_pagamento' pagamento.id %}">Editar</a>
+                            | <a href="{% url 'excluir_pagamento' pagamento.id %}">Excluir</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">Nenhum pagamento cadastrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}

@@ -15,7 +15,12 @@
                 <a href="{% url 'home' %}">Home</a>
                 <a href="{% url 'listar_locacoes' %}">Locações</a>
                 <a href="{% url 'listar_categorias' %}">Categorias</a>
+                <a href="{% url 'listar_imagens' %}">Imagens</a>
                 <a href="{% url 'listar_reservas' %}">Reservas</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'listar_pagamentos' %}">Pagamentos</a>
+                    <a href="{% url 'listar_usuarios' %}">Usuarios</a>
+                {% endif %}
                 {% if user.is_authenticated %}
                     <span>Olá, {{ user.username }}</span>
                     <a href="{% url 'logout_usuario' %}">Sair</a>

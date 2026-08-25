@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Excluir pagamento</h1>
+        <p>Tem certeza que deseja excluir o pagamento <strong>#{{ pagamento.id }}</strong>?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirmar exclusao</button>
+            <a href="{% url 'detalhar_pagamento' pagamento.id %}" class="button-link secondary">Cancelar</a>
+        </form>
+    </section>
+{% endblock %}

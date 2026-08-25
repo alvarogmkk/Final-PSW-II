@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Excluir imagem</h1>
+        <p>Tem certeza que deseja excluir esta imagem da locacao <strong>{{ imagem.fk_locacao.nome }}</strong>?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirmar exclusao</button>
+            <a href="{% url 'detalhar_imagem' imagem.id %}" class="button-link secondary">Cancelar</a>
+        </form>
+    </section>
+{% endblock %}

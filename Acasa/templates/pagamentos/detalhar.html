@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <h1>Detalhes do pagamento</h1>
+        <div class="card">
+            <p><strong>ID:</strong> {{ pagamento.id }}</p>
+            <p><strong>Valor:</strong> R$ {{ pagamento.valor }}</p>
+            <p><strong>Status:</strong> {{ pagamento.status }}</p>
+            <p><strong>Metodo:</strong> {{ pagamento.metodo }}</p>
+            <div class="inline-actions">
+                <a href="{% url 'listar_pagamentos' %}" class="button-link secondary">Voltar</a>
+                <a href="{% url 'editar_pagamento' pagamento.id %}" class="button-link">Editar</a>
+                <a href="{% url 'excluir_pagamento' pagamento.id %}" class="button-link secondary">Excluir</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

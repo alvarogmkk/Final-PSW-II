@@ -144,6 +144,22 @@ form textarea {
     border-radius: 8px;
 }
 
+.card-image,
+.preview-image {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.card-image {
+    height: 160px;
+    margin-bottom: 12px;
+}
+
+.preview-image {
+    max-height: 360px;
+}
+
 .inline-actions {
     display: flex;
     gap: 12px;

@@ -1,15 +1,6 @@
 from django import forms
 
-from .models import Imagem, Locacao
-
-
-class ImagemForm(forms.ModelForm):
-    class Meta:
-        model = Imagem
-        fields = ['url', 'descricao', 'ordem', 'principal']
-        widgets = {
-            'descricao': forms.TextInput(attrs={'placeholder': 'Descricao da imagem'}),
-        }
+from .models import Locacao
 
 
 class LocacaoForm(forms.ModelForm):

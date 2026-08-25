@@ -7,6 +7,8 @@ urlpatterns = [
     path('', locacao_views.home, name='home'),
     path('categorias/', include('categoria.urls')),
     path('locacoes/', include('locacao.urls')),
+    path('imagens/', include('imagens.urls')),
+    path('pagamentos/', include('pagamento.urls')),
     path('reservas/', include('reserva.urls')),
     path('usuarios/', include('usuario.urls')),
     path('admin/', admin.site.urls),
