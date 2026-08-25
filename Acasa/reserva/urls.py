@@ -1,0 +1,10 @@
+from django.urls import path
+
+from . import views
+
+
+urlpatterns = [
+    path('', views.listar_reservas, name='listar_reservas'),
+    path('criar/', views.criar_reserva, name='criar_reserva'),
+    path('<int:id>/', views.detalhar_reserva, name='detalhar_reserva'),
+]
