@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from categoria.models import Categoria
@@ -24,6 +25,7 @@ def detalhar_locacao(request, id):
     return render(request, 'locacoes/detalhar.html', {'locacao': locacao, 'imagens': imagens})
 
 
+@permission_required('locacao.add_locacao', raise_exception=True)
 def criar_locacao(request):
     if request.method == 'POST':
         form = LocacaoForm(request.POST)
@@ -38,6 +40,7 @@ def criar_locacao(request):
 
 
 
+@permission_required('locacao.change_locacao', raise_exception=True)
 def editar_locacao(request, id):
     locacao = get_object_or_404(Locacao, pk=id)
 
@@ -54,6 +57,7 @@ def editar_locacao(request, id):
 
 
 
+@permission_required('locacao.delete_locacao', raise_exception=True)
 def excluir_locacao(request, id):
     locacao = get_object_or_404(Locacao, pk=id)
 

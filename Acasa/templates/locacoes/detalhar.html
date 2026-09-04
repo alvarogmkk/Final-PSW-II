@@ -15,7 +15,6 @@
                 {% if user.is_authenticated %}
                     <div class="inline-actions">
                         <a href="{% url 'criar_reserva' %}?locacao={{ locacao.id }}" class="button-link">Reservar</a>
-                        <a href="{% url 'criar_imagem' %}?locacao={{ locacao.id }}" class="button-link secondary">Adicionar imagem</a>
                         <a href="{% url 'editar_locacao' locacao.id %}" class="button-link secondary">Editar</a>
                         <a href="{% url 'excluir_locacao' locacao.id %}" class="button-link secondary">Excluir</a>
                     </div>
@@ -27,9 +26,7 @@
                 {% if imagens %}
                     <div class="image-gallery">
                         {% for imagem in imagens %}
-                            <a href="{% url 'detalhar_imagem' imagem.id %}">
-                                <img src="{{ imagem.url }}" alt="{{ imagem.descricao }}">
-                            </a>
+                            <img src="{{ imagem.url }}" alt="{{ imagem.descricao }}">
                         {% endfor %}
                     </div>
                 {% else %}

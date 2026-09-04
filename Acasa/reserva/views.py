@@ -1,4 +1,6 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 
 from pagamento.models import Pagamento
@@ -8,11 +10,13 @@ from .forms import ReservaForm
 from .models import Reserva
 
 
+@login_required
 def criar_reserva(request):
     if request.method == 'POST':
         form = ReservaForm(request.POST)
         if form.is_valid():
             reserva = form.save(commit=False)
+            reserva.fk_usuario = get_object_or_404(Usuario, pk=request.user.pk)
             preencher_valor_total(reserva)
 
             if reserva.fk_pagamento is None:
@@ -32,18 +36,14 @@ def criar_reserva(request):
         if locacao_id:
             initial['fk_locacao'] = locacao_id
 
-        try:
-            initial['fk_usuario'] = Usuario.objects.get(pk=request.user.pk)
-        except Usuario.DoesNotExist:
-            pass
-
         form = ReservaForm(initial=initial)
 
     return render(request, 'reservas/criar.html', {'form': form})
 
 
+@login_required
 def listar_reservas(request):
-    if not request.user.is_authenticated or request.user.is_staff:
+    if request.user.is_staff:
         reservas = Reserva.objects.select_related('fk_usuario', 'fk_locacao', 'fk_pagamento').all()
     else:
         usuario = get_object_or_404(Usuario, pk=request.user.pk)
@@ -56,25 +56,25 @@ def listar_reservas(request):
     return render(request, 'reservas/listar.html', {'reservas': reservas})
 
 
+@login_required
 def detalhar_reserva(request, id):
     reserva = get_object_or_404(
         Reserva.objects.select_related('fk_usuario', 'fk_locacao', 'fk_pagamento'),
         pk=id,
     )
 
-    if request.user.is_authenticated and not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
-        messages.error(request, 'Voce nao tem permissao para acessar esta reserva.')
-        return redirect('listar_reservas')
+    if not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
+        return HttpResponseForbidden('Você não tem permissão para acessar esta reserva.')
 
     return render(request, 'reservas/detalhar.html', {'reserva': reserva})
 
 
+@login_required
 def editar_reserva(request, id):
     reserva = get_object_or_404(Reserva, pk=id)
 
-    if request.user.is_authenticated and not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
-        messages.error(request, 'Voce nao tem permissao para editar esta reserva.')
-        return redirect('listar_reservas')
+    if not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
+        return HttpResponseForbidden('Você não tem permissão para editar esta reserva.')
 
     if request.method == 'POST':
         form = ReservaForm(request.POST, instance=reserva)
@@ -90,12 +90,12 @@ def editar_reserva(request, id):
     return render(request, 'reservas/editar.html', {'form': form, 'reserva': reserva})
 
 
+@login_required
 def excluir_reserva(request, id):
     reserva = get_object_or_404(Reserva, pk=id)
 
-    if request.user.is_authenticated and not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
-        messages.error(request, 'Voce nao tem permissao para excluir esta reserva.')
-        return redirect('listar_reservas')
+    if not request.user.is_staff and reserva.fk_usuario.pk != request.user.pk:
+        return HttpResponseForbidden('Você não tem permissão para excluir esta reserva.')
 
     if request.method == 'POST':
         reserva.delete()

@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'usuario.apps.UsuarioConfig',
     'categoria.apps.CategoriaConfig',
     'locacao.apps.LocacaoConfig',
     'imagens.apps.ImagensConfig',
     'pagamento.apps.PagamentoConfig',
+    'usuario.apps.UsuarioConfig',
     'reserva.apps.ReservaConfig',
 ]
 
@@ -108,9 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -122,4 +122,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Destinos centralizados usados pelos decorators de autenticação.
 LOGIN_URL = 'login_usuario'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'

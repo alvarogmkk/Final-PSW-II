@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ImagemForm
@@ -15,6 +16,7 @@ def detalhar_imagem(request, id):
     return render(request, 'imagens/detalhar.html', {'imagem': imagem})
 
 
+@permission_required('imagens.add_imagem', raise_exception=True)
 def criar_imagem(request):
     if request.method == 'POST':
         form = ImagemForm(request.POST)
@@ -33,6 +35,7 @@ def criar_imagem(request):
     return render(request, 'imagens/criar.html', {'form': form})
 
 
+@permission_required('imagens.change_imagem', raise_exception=True)
 def editar_imagem(request, id):
     imagem = get_object_or_404(Imagem, pk=id)
 
@@ -48,6 +51,7 @@ def editar_imagem(request, id):
     return render(request, 'imagens/editar.html', {'form': form, 'imagem': imagem})
 
 
+@permission_required('imagens.delete_imagem', raise_exception=True)
 def excluir_imagem(request, id):
     imagem = get_object_or_404(Imagem, pk=id)
 

@@ -11,7 +11,6 @@ class ReservaForm(forms.ModelForm):
             'data_saida',
             'valor_total',
             'status',
-            'fk_usuario',
             'fk_locacao',
             'fk_pagamento',
         ]

@@ -3,7 +3,7 @@
 {% block content %}
     <section class="section">
         <h1>Locações</h1>
-        {% if user.is_authenticated %}
+        {% if perms.locacao.add_locacao %}
             <a href="{% url 'criar_locacao' %}" class="button-link">Nova locação</a>
         {% endif %}
     </section>
@@ -18,8 +18,10 @@
                     <p><strong>Preço:</strong> R$ {{ locacao.preco_diaria }}</p>
                     <div class="inline-actions">
                         <a href="{% url 'detalhar_locacao' locacao.id %}" class="button-link">Detalhes</a>
-                        {% if user.is_authenticated %}
+                        {% if perms.locacao.change_locacao %}
                             <a href="{% url 'editar_locacao' locacao.id %}" class="button-link secondary">Editar</a>
+                        {% endif %}
+                        {% if perms.locacao.delete_locacao %}
                             <a href="{% url 'excluir_locacao' locacao.id %}" class="button-link secondary">Excluir</a>
                         {% endif %}
                     </div>

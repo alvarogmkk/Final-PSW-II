@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import CategoriaForm
@@ -15,6 +16,7 @@ def detalhar_categoria(request, id):
     return render(request, 'categorias/detalhar.html', {'categoria': categoria})
 
 
+@permission_required('categoria.add_categoria', raise_exception=True)
 def criar_categoria(request):
     if request.method == 'POST':
         form = CategoriaForm(request.POST)
@@ -28,6 +30,7 @@ def criar_categoria(request):
     return render(request, 'categorias/criar.html', {'form': form})
 
 
+@permission_required('categoria.change_categoria', raise_exception=True)
 def editar_categoria(request, id):
     categoria = get_object_or_404(Categoria, pk=id)
 
@@ -43,6 +46,7 @@ def editar_categoria(request, id):
     return render(request, 'categorias/editar.html', {'form': form, 'categoria': categoria})
 
 
+@permission_required('categoria.delete_categoria', raise_exception=True)
 def excluir_categoria(request, id):
     categoria = get_object_or_404(Categoria, pk=id)
 

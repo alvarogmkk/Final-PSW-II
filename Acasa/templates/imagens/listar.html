@@ -3,7 +3,7 @@
 {% block content %}
     <section class="section">
         <h1>Imagens</h1>
-        {% if user.is_authenticated %}
+        {% if perms.imagens.add_imagem %}
             <a href="{% url 'criar_imagem' %}" class="button-link">Nova imagem</a>
         {% endif %}
     </section>
@@ -19,8 +19,10 @@
                     <p><strong>Principal:</strong> {{ imagem.principal }}</p>
                     <div class="inline-actions">
                         <a href="{% url 'detalhar_imagem' imagem.id %}" class="button-link">Detalhes</a>
-                        {% if user.is_authenticated %}
+                        {% if perms.imagens.change_imagem %}
                             <a href="{% url 'editar_imagem' imagem.id %}" class="button-link secondary">Editar</a>
+                        {% endif %}
+                        {% if perms.imagens.delete_imagem %}
                             <a href="{% url 'excluir_imagem' imagem.id %}" class="button-link secondary">Excluir</a>
                         {% endif %}
                     </div>

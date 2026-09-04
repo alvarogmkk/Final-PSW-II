@@ -5,17 +5,12 @@
         <h1>Detalhes da reserva</h1>
         <div class="card">
             <p><strong>Locação:</strong> {{ reserva.fk_locacao.nome }}</p>
-            <p><strong>Usuário:</strong> {{ reserva.fk_usuario.username }}</p>
+            <p><strong>Usuário:</strong> {{ reserva.fk_usuario.fk_user.username }}</p>
             <p><strong>Data de entrada:</strong> {{ reserva.data_entrada }}</p>
             <p><strong>Data de saída:</strong> {{ reserva.data_saida }}</p>
             <p><strong>Valor total:</strong> R$ {{ reserva.valor_total }}</p>
             <p><strong>Status:</strong> {{ reserva.status }}</p>
             <p><strong>Pagamento:</strong> {{ reserva.fk_pagamento.metodo }} | {{ reserva.fk_pagamento.status }}</p>
-            <div class="inline-actions">
-                <a href="{% url 'listar_reservas' %}" class="button-link secondary">Voltar</a>
-                <a href="{% url 'editar_reserva' reserva.id %}" class="button-link">Editar</a>
-                <a href="{% url 'excluir_reserva' reserva.id %}" class="button-link secondary">Excluir</a>
-            </div>
         </div>
     </section>
 {% endblock %}
