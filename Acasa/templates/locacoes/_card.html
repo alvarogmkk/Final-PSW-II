@@ -1,0 +1,78 @@
+{% load static %}
+<article class="probootstrap-card probootstrap-listing property-card">
+    <a href="{% url 'detalhar_locacao' locacao.pk %}" class="probootstrap-card-media property-image" aria-label="Ver detalhes de {{ locacao.nome }}">
+        {% with imagem=locacao.imagens.all.0 %}
+            {% if imagem %}
+                <img src="{{ imagem.url_exibicao }}" alt="{{ imagem.descricao|default:locacao.nome }}" loading="lazy" width="640" height="420">
+            {% else %}
+                <img src="{% static 'haus/img/slider_1.jpg' %}" alt="Imagem ilustrativa de uma casa" loading="lazy" width="640" height="420">
+            {% endif %}
+        {% endwith %}
+        <span class="property-tag{% if not locacao.disponivel %} unavailable{% endif %}">
+            {% if locacao.disponivel %}
+                Disponível
+            {% else %}
+                Indisponível
+            {% endif %}
+        </span>
+        {% if locacao.demonstracao %}
+            <span class="demo-tag">
+                Demonstração
+            </span>
+        {% endif %}
+    </a>
+    <div class="probootstrap-card-text property-body">
+        <p class="eyebrow">
+            {{ locacao.fk_categoria.nome }}
+        </p>
+        <h3>
+            <a href="{% url 'detalhar_locacao' locacao.pk %}">
+                {{ locacao.nome }}
+            </a>
+        </h3>
+        <p class="property-location">
+            {{ locacao.local }}
+        </p>
+        <div class="property-specs">
+            <span>
+                {{ locacao.quartos|default_if_none:'—' }} quartos
+            </span>
+            <span>
+                {{ locacao.banheiros|default_if_none:'—' }} banheiros
+            </span>
+            <span>
+                {{ locacao.vagas_garagem|default_if_none:'—' }} vagas
+            </span>
+            <span>
+                {% if locacao.area_m2 %}
+                    {{ locacao.area_m2|floatformat:'-2' }}
+                {% else %}
+                    —
+                {% endif %}
+                m²
+            </span>
+        </div>
+        <div class="property-footer">
+            <div class="property-price">
+                {% if locacao.preco_mensal %}
+                    <strong>
+                        R$ {{ locacao.preco_mensal|floatformat:'2g' }}
+                    </strong>
+                    <span>
+                        / mês
+                    </span>
+                {% else %}
+                    <strong>
+                        R$ {{ locacao.preco_diaria|floatformat:'2g' }}
+                    </strong>
+                    <span>
+                        / diária
+                    </span>
+                {% endif %}
+            </div>
+            <a class="details-link" href="{% url 'detalhar_locacao' locacao.pk %}" aria-label="Detalhes de {{ locacao.nome }}">
+                Ver imóvel →
+            </a>
+        </div>
+    </div>
+</article>

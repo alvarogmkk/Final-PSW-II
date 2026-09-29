@@ -1,34 +1,72 @@
 {% extends 'base.html' %}
-
+{% block title %}
+    Imóveis para alugar · ACasa
+{% endblock %}
 {% block content %}
-    <section class="section">
-        <h1>Locações</h1>
+    <section class="page-heading">
+        <p class="eyebrow">
+            Encontre seu novo endereço
+        </p>
+        <h1>
+            Um imóvel para cada momento.
+        </h1>
+        <p>
+            Explore casas e apartamentos. Filtre pelo que importa para você.
+        </p>
         {% if perms.locacao.add_locacao %}
-            <a href="{% url 'criar_locacao' %}" class="button-link">Nova locação</a>
+            <a href="{% url 'criar_locacao' %}" class="button-link">
+                Cadastrar imóvel
+            </a>
         {% endif %}
     </section>
-
-    <section class="section">
+    {% include 'locacoes/_filtros.html' %}
+    <section class="section results-section">
+        <div class="section-heading">
+            <h2>
+                {{ page_obj.paginator.count }}
+                {% if page_obj.paginator.count == 1 %}
+                    imóvel encontrado
+                {% else %}
+                    imóveis encontrados
+                {% endif %}
+            </h2>
+            <span>
+                Aluguéis mensais e estadias por diária
+            </span>
+        </div>
         <div class="card-grid">
             {% for locacao in locacoes %}
-                <div class="card">
-                    <h3>{{ locacao.nome }}</h3>
-                    <p><strong>Categoria:</strong> {{ locacao.fk_categoria.nome }}</p>
-                    <p><strong>Local:</strong> {{ locacao.local }}</p>
-                    <p><strong>Preço:</strong> R$ {{ locacao.preco_diaria }}</p>
-                    <div class="inline-actions">
-                        <a href="{% url 'detalhar_locacao' locacao.id %}" class="button-link">Detalhes</a>
-                        {% if perms.locacao.change_locacao %}
-                            <a href="{% url 'editar_locacao' locacao.id %}" class="button-link secondary">Editar</a>
-                        {% endif %}
-                        {% if perms.locacao.delete_locacao %}
-                            <a href="{% url 'excluir_locacao' locacao.id %}" class="button-link secondary">Excluir</a>
-                        {% endif %}
-                    </div>
-                </div>
+                {% include 'locacoes/_card.html' %}
             {% empty %}
-                <p>Nenhuma locação cadastrada.</p>
+                <div class="empty-state">
+                    <h3>
+                        Nenhum imóvel encontrado
+                    </h3>
+                    <p>
+                        Experimente outra cidade, tipo ou faixa de preço.
+                    </p>
+                    <a class="button-link" href="{% url 'listar_locacoes' %}">
+                        Ver todos os imóveis
+                    </a>
+                </div>
             {% endfor %}
         </div>
+        {% if page_obj.has_other_pages %}
+            <nav class="pagination" aria-label="Páginas do catálogo">
+                {% if page_obj.has_previous %}
+                    <a href="?{{ parametros }}&amp;page={{ page_obj.previous_page_number }}">
+                        ← Anterior
+                    </a>
+                {% endif %}
+                <span>
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?{{ parametros }}&amp;page={{ page_obj.next_page_number }}">
+                        Próxima →
+                    </a>
+                {% endif %}
+            </nav>
+        {% endif %}
     </section>
 {% endblock %}

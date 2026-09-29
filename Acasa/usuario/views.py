@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
@@ -19,13 +19,13 @@ def listar_usuarios(request):
 @permission_required('usuario.add_usuario', raise_exception=True)
 def criar_usuario(request):
     if request.method == 'POST':
-        form = UsuarioForm(request.POST)
+        form = UsuarioForm(request.POST, permitir_permissoes=request.user.is_superuser)
         if form.is_valid():
             form.save()
             messages.success(request, 'Usuario criado com sucesso!')
             return redirect('listar_usuarios')
     else:
-        form = UsuarioForm()
+        form = UsuarioForm(permitir_permissoes=request.user.is_superuser)
 
     return render(request, 'usuarios/criar.html', {'form': form})
 
@@ -45,13 +45,15 @@ def editar_usuario(request, id):
         return HttpResponseForbidden('Você não tem permissão para editar este usuário.')
 
     if request.method == 'POST':
-        form = UsuarioForm(request.POST, instance=usuario)
+        form = UsuarioForm(request.POST, instance=usuario, permitir_permissoes=request.user.is_superuser)
         if form.is_valid():
-            form.save()
+            atualizado = form.save()
+            if atualizado.pk == request.user.pk:
+                update_session_auth_hash(request, atualizado)
             messages.success(request, 'Usuario atualizado com sucesso!')
             return redirect('detalhar_usuario', id=usuario.id)
     else:
-        form = UsuarioForm(instance=usuario)
+        form = UsuarioForm(instance=usuario, permitir_permissoes=request.user.is_superuser)
 
     return render(request, 'usuarios/editar.html', {'form': form, 'usuario': usuario})
 

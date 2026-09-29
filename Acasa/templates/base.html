@@ -1,48 +1,154 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACasa - Sistema de Locação</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <header class="site-header">
-        <nav class="container nav">
-            <a href="{% url 'home' %}" class="logo">ACasa</a>
-            <div class="nav-links">
-                <a href="{% url 'home' %}">Home</a>
-                <a href="{% url 'listar_locacoes' %}">Locações</a>
-                <a href="{% url 'listar_categorias' %}">Categorias</a>
-                <a href="{% url 'listar_reservas' %}">Reservas</a>
-                {% if perms.pagamento.view_pagamento %}
-                    <a href="{% url 'listar_pagamentos' %}">Pagamentos</a>
-                {% endif %}
-                {% if user.is_authenticated %}
-                    <span>Olá, {{ user.username }}</span>
-                    <form method="post" action="{% url 'logout_usuario' %}" class="logout-form">
-                        {% csrf_token %}
-                        <button type="submit" class="link-button">Sair</button>
-                    </form>
-                {% else %}
-                    <a href="{% url 'login_usuario' %}">Login</a>
-                    <a href="{% url 'cadastro_usuario' %}">Cadastro</a>
-                {% endif %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/svg+xml" href="{% static 'favicon.svg' %}">
+        <meta name="description" content="Encontre casas e apartamentos para alugar no ACasa. Explore imóveis, compare opções e organize suas reservas.">
+        <title>
+            {% block title %}
+                ACasa · Encontre seu próximo lar
+            {% endblock %}
+        </title>
+        <link rel="stylesheet" href="{% static 'haus/css/haus-modern.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script src="{% static 'js/site.js' %}" defer>
+        </script>
+    </head>
+    <body>
+        <a class="skip-link" href="#conteudo">
+            Pular para o conteúdo
+        </a>
+        <header class="probootstrap-header site-header">
+            <nav class="container nav" aria-label="Navegação principal">
+                <a href="{% url 'home' %}" class="probootstrap-logo logo">
+                    ACasa
+                    <span>
+                        .
+                    </span>
+                </a>
+                <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" hidden>
+                    Menu ☰
+                </button>
+                <div class="nav-links" id="menu-principal">
+                    <a href="{% url 'home' %}">
+                        Início
+                    </a>
+                    <a href="{% url 'listar_locacoes' %}">
+                        Imóveis
+                    </a>
+                    <a href="{% url 'listar_categorias' %}">
+                        Categorias
+                    </a>
+                    <a href="{% url 'listar_reservas' %}">
+                        Reservas
+                    </a>
+                    {% if perms.pagamento.view_pagamento %}
+                        <a href="{% url 'listar_pagamentos' %}">
+                            Pagamentos
+                        </a>
+                    {% endif %}
+                    {% if perms.usuario.view_usuario %}
+                        <a href="{% url 'listar_usuarios' %}">
+                            Usuários
+                        </a>
+                    {% endif %}
+                    {% if perms.imagens.add_imagem or perms.imagens.change_imagem %}
+                        <a href="{% url 'listar_imagens' %}">
+                            Imagens
+                        </a>
+                    {% endif %}
+                    {% if user.is_staff %}
+                        <a href="{% url 'admin:index' %}">
+                            Admin
+                        </a>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        {% if user.usuario %}
+                            <a href="{% url 'detalhar_usuario' user.pk %}">
+                                Minha conta
+                            </a>
+                        {% endif %}
+                        <form method="post" action="{% url 'logout_usuario' %}" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit" class="link-button">
+                                Sair
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login_usuario' %}">
+                            Entrar
+                        </a>
+                        <a href="{% url 'cadastro_usuario' %}" class="nav-cta">
+                            Criar conta
+                        </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        <main id="conteudo" class="container content-area">
+            {% if messages %}
+                <div class="messages" role="status">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% block content %}
+            {% endblock %}
+        </main>
+        <footer class="site-footer">
+            <div class="container footer-grid">
+                <div>
+                    <a class="logo" href="{% url 'home' %}">
+                        ACasa
+                        <span>
+                            .
+                        </span>
+                    </a>
+                    <p>
+                        Seu próximo capítulo começa em casa.
+                    </p>
+                </div>
+                <div>
+                    <strong>
+                        Encontre seu espaço
+                    </strong>
+                    <a href="{% url 'listar_locacoes' %}">
+                        Explorar imóveis
+                    </a>
+                    <a href="{% url 'listar_categorias' %}">
+                        Tipos de imóvel
+                    </a>
+                </div>
+                <div>
+                    <strong>
+                        Sua experiência
+                    </strong>
+                    <a href="{% url 'listar_reservas' %}">
+                        Minhas reservas
+                    </a>
+                    <a href="{% url 'login_usuario' %}">
+                        Acessar minha conta
+                    </a>
+                </div>
             </div>
-        </nav>
-    </header>
-
-    <main class="container content-area">
-        {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                {% endfor %}
+            <div class="container footer-bottom">
+                <span>
+                    ©
+                    {% now "Y" %}
+                    ACasa. Catálogo de locação de imóveis.
+                </span>
+                <span>
+                    Design adaptado de
+                    <a href="https://uicookies.com/">
+                        Haus · uiCookies
+                    </a>
+                </span>
             </div>
-        {% endif %}
-
-        {% block content %}{% endblock %}
-    </main>
-</body>
+        </footer>
+    </body>
 </html>

@@ -1,0 +1,24 @@
+<form method="get" action="{% url 'listar_locacoes' %}" class="search-form" role="search">
+    <div class="search-fields">
+        {% for field in filtros %}
+            <div class="search-field{% if field.name == 'q' %} search-wide{% endif %}">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+                {{ field }}{{ field.errors }}
+            </div>
+        {% endfor %}
+    </div>
+    {{ filtros.non_field_errors }}
+    <div class="search-actions">
+        <button type="submit">
+            Buscar imóveis
+            <span aria-hidden="true">
+                →
+            </span>
+        </button>
+        <a href="{% url 'listar_locacoes' %}">
+            Limpar filtros
+        </a>
+    </div>
+</form>

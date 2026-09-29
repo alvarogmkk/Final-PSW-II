@@ -47,3 +47,16 @@ class AuthenticationFlowTests(TestCase):
 
         self.assertRedirects(response, reverse('home'))
         self.assertNotIn('_auth_user_id', self.client.session)
+
+
+    def test_edicao_preserva_senha_e_nao_permite_auto_conceder_permissoes(self):
+        from django.contrib.auth.models import Permission
+        permissao = Permission.objects.get(codename='add_locacao')
+        self.client.force_login(self.usuario)
+        response = self.client.post(reverse('editar_usuario', args=[self.usuario.pk]), {
+            'username': self.usuario.username, 'telefone': self.usuario.telefone,
+            'CPF': self.usuario.CPF, 'password': '', 'user_permissions': [permissao.pk]})
+        self.assertEqual(response.status_code, 302)
+        self.usuario.refresh_from_db()
+        self.assertTrue(self.usuario.check_password('senha-segura-123'))
+        self.assertFalse(self.usuario.has_perm('locacao.add_locacao'))

@@ -30,9 +30,13 @@ class UsuarioForm(forms.ModelForm):
             'user_permissions': forms.CheckboxSelectMultiple(),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, permitir_permissoes=False, **kwargs):
         super().__init__(*args, **kwargs)
+        self._senha_original = self.instance.password
         self.fields['password'].required = self.instance.pk is None
+        if not permitir_permissoes:
+            self.fields.pop('groups')
+            self.fields.pop('user_permissions')
 
     def save(self, commit=True):
         usuario = super().save(commit=False)
@@ -40,6 +44,8 @@ class UsuarioForm(forms.ModelForm):
 
         if password:
             usuario.set_password(password)
+        else:
+            usuario.password = self._senha_original
 
         if commit:
             usuario.save()
@@ -71,8 +77,8 @@ class CadastroForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
-        user.first_name = self.cleaned_data.get('first_name', '')
-        user.last_name = self.cleaned_data.get('last_name', '')
+        user.first_name = self.cleaned_data.get('Primeiro Nome', '')
+        user.last_name = self.cleaned_data.get('Segundo Nome', '')
         user.telefone = self.cleaned_data['telefone']
         user.CPF = self.cleaned_data['CPF']
 

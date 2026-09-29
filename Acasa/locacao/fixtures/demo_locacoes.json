@@ -1,0 +1,485 @@
+[
+  {
+    "model": "categoria.categoria",
+    "pk": 101,
+    "fields": {
+      "nome": "Casa familiar",
+      "descricao": "Casas completas para famílias e grupos.",
+      "tipo_locacao": "Residencial"
+    }
+  },
+  {
+    "model": "categoria.categoria",
+    "pk": 102,
+    "fields": {
+      "nome": "Casa de praia",
+      "descricao": "Imóveis próximos ao mar para descanso e lazer.",
+      "tipo_locacao": "Temporada"
+    }
+  },
+  {
+    "model": "categoria.categoria",
+    "pk": 103,
+    "fields": {
+      "nome": "Apartamento",
+      "descricao": "Apartamentos práticos em regiões urbanas.",
+      "tipo_locacao": "Residencial"
+    }
+  },
+  {
+    "model": "categoria.categoria",
+    "pk": 104,
+    "fields": {
+      "nome": "Kitnet",
+      "descricao": "Opções compactas para estadias individuais.",
+      "tipo_locacao": "Residencial"
+    }
+  },
+  {
+    "model": "categoria.categoria",
+    "pk": 105,
+    "fields": {
+      "nome": "Chácara",
+      "descricao": "Espaços amplos para lazer junto à natureza.",
+      "tipo_locacao": "Temporada"
+    }
+  },
+  {
+    "model": "categoria.categoria",
+    "pk": 106,
+    "fields": {
+      "nome": "Casa de campo",
+      "descricao": "Refúgios tranquilos em áreas rurais.",
+      "tipo_locacao": "Temporada"
+    }
+  },
+  {
+    "model": "categoria.categoria",
+    "pk": 107,
+    "fields": {
+      "nome": "Apartamento de luxo",
+      "descricao": "Apartamentos premium com infraestrutura diferenciada.",
+      "tipo_locacao": "Residencial"
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 201,
+    "fields": {
+      "nome": "Casa Jardim das Palmeiras",
+      "descricao": "Casa familiar acolhedora, com três quartos, quintal arborizado e espaço para refeições ao ar livre. Ideal para famílias que desejam conforto e tranquilidade. O imóvel conta com 3 quarto(s), 2 banheiro(s), 2 vaga(s) e 145 m² de área construída. Aluguel mensal anunciado de R$ 3.200,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 420.0,
+      "capacidade_maxima": 6,
+      "endereco": "Rua das Palmeiras, 120",
+      "local": "Campinas - SP",
+      "fk_categoria": 101,
+      "preco_mensal": "3200",
+      "quartos": 3,
+      "banheiros": 2,
+      "vagas_garagem": 2,
+      "area_m2": "145",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 202,
+    "fields": {
+      "nome": "Casa Azul do Mar",
+      "descricao": "Casa de praia iluminada a poucos minutos da areia, com varanda, churrasqueira e ambientes preparados para uma temporada relaxante. O imóvel conta com 4 quarto(s), 3 banheiro(s), 2 vaga(s) e 190 m² de área construída. Aluguel mensal anunciado de R$ 4.800,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 650.0,
+      "capacidade_maxima": 8,
+      "endereco": "Avenida Beira-Mar, 85",
+      "local": "Ubatuba - SP",
+      "fk_categoria": 102,
+      "preco_mensal": "4800",
+      "quartos": 4,
+      "banheiros": 3,
+      "vagas_garagem": 2,
+      "area_m2": "190",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 203,
+    "fields": {
+      "nome": "Apartamento Central Vista",
+      "descricao": "Apartamento moderno no centro, próximo a restaurantes, mercados e transporte público. Possui sala integrada, cozinha equipada e uma vista urbana agradável. O imóvel conta com 2 quarto(s), 1 banheiro(s), 1 vaga(s) e 62 m² de área construída. Aluguel mensal anunciado de R$ 2.400,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 280.0,
+      "capacidade_maxima": 3,
+      "endereco": "Rua do Comércio, 450, ap. 72",
+      "local": "São Paulo - SP",
+      "fk_categoria": 103,
+      "preco_mensal": "2400",
+      "quartos": 2,
+      "banheiros": 1,
+      "vagas_garagem": 1,
+      "area_m2": "62",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 204,
+    "fields": {
+      "nome": "Kitnet Vila Universitária",
+      "descricao": "Kitnet funcional e bem localizada, com internet, cozinha compacta e fácil acesso a universidades, serviços e transporte. O imóvel conta com 1 quarto(s), 1 banheiro(s), 0 vaga(s) e 28 m² de área construída. Aluguel mensal anunciado de R$ 950,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 145.0,
+      "capacidade_maxima": 2,
+      "endereco": "Rua dos Estudantes, 38, ap. 12",
+      "local": "São Carlos - SP",
+      "fk_categoria": 104,
+      "preco_mensal": "950",
+      "quartos": 1,
+      "banheiros": 1,
+      "vagas_garagem": 0,
+      "area_m2": "28",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 205,
+    "fields": {
+      "nome": "Chácara Recanto do Lago",
+      "descricao": "Chácara espaçosa com piscina, área gourmet, gramado e vista para o lago. Uma ótima escolha para reunir família e amigos em meio à natureza. O imóvel conta com 5 quarto(s), 4 banheiro(s), 6 vaga(s) e 320 m² de área construída. Aluguel mensal anunciado de R$ 6.500,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 980.0,
+      "capacidade_maxima": 14,
+      "endereco": "Estrada do Lago, km 12",
+      "local": "Atibaia - SP",
+      "fk_categoria": 105,
+      "preco_mensal": "6500",
+      "quartos": 5,
+      "banheiros": 4,
+      "vagas_garagem": 6,
+      "area_m2": "320",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 206,
+    "fields": {
+      "nome": "Casa de Campo Serra Verde",
+      "descricao": "Casa de campo cercada por paisagens verdes, lareira e varanda ampla. Perfeita para descansar em casal, em família ou com pequenos grupos. O imóvel conta com 3 quarto(s), 2 banheiro(s), 2 vaga(s) e 160 m² de área construída. Aluguel mensal anunciado de R$ 3.800,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 540.0,
+      "capacidade_maxima": 6,
+      "endereco": "Estrada Serra Verde, km 7",
+      "local": "Campos do Jordão - SP",
+      "fk_categoria": 106,
+      "preco_mensal": "3800",
+      "quartos": 3,
+      "banheiros": 2,
+      "vagas_garagem": 2,
+      "area_m2": "160",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 207,
+    "fields": {
+      "nome": "Apartamento Skyline Premium",
+      "descricao": "Apartamento de luxo com acabamentos sofisticados, varanda panorâmica, condomínio completo e localização privilegiada. O imóvel conta com 3 quarto(s), 4 banheiro(s), 3 vaga(s) e 210 m² de área construída. Aluguel mensal anunciado de R$ 9.800,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 1250.0,
+      "capacidade_maxima": 4,
+      "endereco": "Alameda das Acácias, 900, ap. 1801",
+      "local": "São Paulo - SP",
+      "fk_categoria": 107,
+      "preco_mensal": "9800",
+      "quartos": 3,
+      "banheiros": 4,
+      "vagas_garagem": 3,
+      "area_m2": "210",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 208,
+    "fields": {
+      "nome": "Casa do Bosque",
+      "descricao": "Casa familiar em rua tranquila, com jardim, sala ampla e cozinha equipada. Uma opção confortável para estadias prolongadas. O imóvel conta com 3 quarto(s), 2 banheiro(s), 1 vaga(s) e 115 m² de área construída. Aluguel mensal anunciado de R$ 2.700,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 390.0,
+      "capacidade_maxima": 5,
+      "endereco": "Rua dos Ipês, 210",
+      "local": "Curitiba - PR",
+      "fk_categoria": 101,
+      "preco_mensal": "2700",
+      "quartos": 3,
+      "banheiros": 2,
+      "vagas_garagem": 1,
+      "area_m2": "115",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 209,
+    "fields": {
+      "nome": "Refúgio Praia do Sol",
+      "descricao": "Casa de praia com decoração leve, redes na varanda e acesso rápido à praia. O imóvel oferece o cenário ideal para dias de descanso. O imóvel conta com 3 quarto(s), 3 banheiro(s), 2 vaga(s) e 175 m² de área construída. Aluguel mensal anunciado de R$ 5.200,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 720.0,
+      "capacidade_maxima": 7,
+      "endereco": "Rua das Conchas, 64",
+      "local": "Ilhabela - SP",
+      "fk_categoria": 102,
+      "preco_mensal": "5200",
+      "quartos": 3,
+      "banheiros": 3,
+      "vagas_garagem": 2,
+      "area_m2": "175",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "locacao.locacao",
+    "pk": 210,
+    "fields": {
+      "nome": "Apartamento Parque das Águas",
+      "descricao": "Apartamento confortável ao lado de um parque, com dois quartos, espaço de trabalho e condomínio com portaria. O imóvel conta com 2 quarto(s), 2 banheiro(s), 1 vaga(s) e 74 m² de área construída. Aluguel mensal anunciado de R$ 2.200,00; despesas de consumo, condomínio e IPTU não estáo incluídas. Consulte também a opção de reserva por diária. Anúncio inteiramente fictício para demonstração do ACasa.",
+      "preco_diaria": 330.0,
+      "capacidade_maxima": 4,
+      "endereco": "Rua das Fontes, 310, ap. 45",
+      "local": "Belo Horizonte - MG",
+      "fk_categoria": 103,
+      "preco_mensal": "2200",
+      "quartos": 2,
+      "banheiros": 2,
+      "vagas_garagem": 1,
+      "area_m2": "74",
+      "disponivel": true,
+      "demonstracao": true
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 301,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Fachada da Casa Jardim das Palmeiras",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 201
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 302,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Sala da Casa Jardim das Palmeiras",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 201
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 303,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Vista externa da Casa Azul do Mar",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 202
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 304,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Praia próxima à Casa Azul do Mar",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 202
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 305,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Sala do Apartamento Central Vista",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 203
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 306,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Cozinha do Apartamento Central Vista",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 203
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 307,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Ambiente da Kitnet Vila Universitária",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 204
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 308,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Dormitório da Kitnet Vila Universitária",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 204
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 309,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Área externa da Chácara Recanto do Lago",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 205
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 310,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Área de convivência da Chácara Recanto do Lago",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 205
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 311,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Vista da Casa de Campo Serra Verde",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 206
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 312,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Varanda da Casa de Campo Serra Verde",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 206
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 313,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Fachada do Apartamento Skyline Premium",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 207
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 314,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Interior do Apartamento Skyline Premium",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 207
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 315,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Fachada da Casa do Bosque",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 208
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 316,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Sala da Casa do Bosque",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 208
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 317,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Varanda do Refúgio Praia do Sol",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 209
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 318,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Paisagem próxima ao Refúgio Praia do Sol",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 209
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 319,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600585152915-d208bec867a1?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Sala do Apartamento Parque das Águas",
+      "ordem": 1,
+      "principal": true,
+      "fk_locacao": 210
+    }
+  },
+  {
+    "model": "imagens.imagem",
+    "pk": 320,
+    "fields": {
+      "url": "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1200&q=80",
+      "descricao": "Quarto do Apartamento Parque das Águas",
+      "ordem": 2,
+      "principal": false,
+      "fk_locacao": 210
+    }
+  }
+]

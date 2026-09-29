@@ -6,7 +6,7 @@
         <div class="detail-layout">
             <div class="card">
                 <p><strong>ID:</strong> {{ imagem.id }}</p>
-                <p><strong>URL:</strong> {{ imagem.url }}</p>
+                <p><strong>URL:</strong> {{ imagem.url_exibicao }}</p>
                 <p><strong>Descricao:</strong> {{ imagem.descricao|default:'Sem descricao' }}</p>
                 <p><strong>Ordem:</strong> {{ imagem.ordem }}</p>
                 <p><strong>Principal:</strong> {{ imagem.principal }}</p>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div>
-                <img src="{{ imagem.url }}" alt="{{ imagem.descricao }}" class="preview-image">
+                <img src="{{ imagem.url_exibicao }}" alt="{{ imagem.descricao }}" class="preview-image">
             </div>
         </div>
     </section>

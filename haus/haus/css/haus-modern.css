@@ -1,0 +1,309 @@
+/* ============================================================
+   Haus — modern design layer (2026)
+   A clean, contemporary premium-real-estate refresh over the
+   existing markup. Loaded LAST so it wins. Keeps the layout simple.
+   Accent: warm gold #b8873a on dark slate.
+   ============================================================ */
+
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f7f5f1;              /* warm off-white for lighter sections */
+  --text: #1e2732;                 /* dark slate for headings */
+  --body: #5b6570;                 /* body copy */
+  --muted: #98a1ac;
+  --line: #e8eaed;
+  --line-strong: #d9dce1;
+  --accent: #b8873a;               /* warm gold */
+  --accent-dark: #9a6f28;
+  --accent-soft: rgba(184,135,58,.14);
+  --slate: #1b232e;                /* dark slate panels/footer */
+  --slate-2: #141a23;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(16,24,40,.04), 0 8px 24px rgba(16,24,40,.06);
+  --shadow-hover: 0 18px 44px rgba(16,24,40,.14);
+}
+
+/* ---------- base ---------- */
+body {
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--body);
+  background: var(--bg);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; }
+h1, h2, h3, h4, h5,
+.probootstrap-card .probootstrap-card-text .probootstrap-card-heading,
+.service .heading {
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.25;
+}
+a { color: var(--accent); transition: color .18s ease; }
+a:hover, a:focus, a:active { color: var(--accent-dark); text-decoration: none; }
+::selection { background: var(--accent); color: #fff; }
+::-moz-selection { background: var(--accent); color: #fff; }
+
+/* ---------- header ---------- */
+.probootstrap-header {
+  padding-top: 22px;
+  padding-bottom: 22px;
+  box-shadow: 0 1px 0 rgba(16,24,40,.06), 0 10px 30px -18px rgba(16,24,40,.35);
+}
+.probootstrap-logo { color: var(--text); font-weight: 800; letter-spacing: .04em; }
+.probootstrap-logo:hover, .probootstrap-logo:focus { color: var(--text); }
+.probootstrap-logo span { color: var(--accent); }
+
+/* ---------- nav: animated gold underline on hover ---------- */
+.probootstrap-main-nav li a {
+  position: relative;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .08em;
+  border-bottom: 0 !important;
+}
+.probootstrap-main-nav li a::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 2px; height: 2px;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: center;
+  transition: transform .2s ease;
+}
+.probootstrap-main-nav li:hover > a::after,
+.probootstrap-main-nav li.active > a::after { transform: scaleX(1); }
+.probootstrap-main-nav li a:hover,
+.probootstrap-main-nav li.active a { color: var(--accent); }
+
+/* ---------- buttons ---------- */
+.btn.btn-primary {
+  background: var(--accent);
+  border: 2px solid var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  padding: 12px 34px;
+}
+.btn.btn-primary:hover, .btn.btn-primary:active, .btn.btn-primary:focus {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #fff;
+}
+.btn.btn-ghost { border-color: var(--accent); color: var(--accent); border-radius: 999px; }
+.btn.btn-ghost:hover { background: var(--accent); color: #fff; }
+
+/* ---------- section rhythm + headings ---------- */
+.probootstrap-section.probootstrap-section-lighter { background: var(--bg-soft); }
+.probootstrap-section .row.heading h2 {
+  position: relative;
+  padding-bottom: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+.probootstrap-section .row.heading h2::after {
+  content: "";
+  display: block;
+  width: 56px; height: 3px;
+  margin: 16px auto 0;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ---------- hero search box ---------- */
+.probootstrap-home-search {
+  background: rgba(23,30,40,.92);
+  border-radius: var(--radius);
+  box-shadow: 0 30px 70px -30px rgba(0,0,0,.75);
+  padding: 34px;
+}
+.probootstrap-home-search .heading { font-weight: 600; font-size: 26px; letter-spacing: -.01em; }
+.probootstrap-home-search .probootstrap-field-group .probootstrap-fields {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  overflow: hidden;
+}
+.probootstrap-home-search .probootstrap-field-group .btn.btn-success {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-weight: 600;
+}
+.probootstrap-home-search .probootstrap-field-group .btn.btn-success:hover { background: var(--accent-dark); }
+@media screen and (max-width: 768px) {
+  .probootstrap-home-search .probootstrap-field-group .probootstrap-fields { border-radius: var(--radius-sm) var(--radius-sm) 0 0; }
+  .probootstrap-home-search .probootstrap-field-group .btn.btn-success { border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
+}
+
+/* ---------- feature icon cards (Award Winning, New Houses…) ---------- */
+.probootstrap-card .probootstrap-card-media.colored .svg { fill: var(--accent); }
+.probootstrap-card-heading { color: var(--text); }
+.probootstrap-card-heading a { color: var(--text); }
+.probootstrap-card-heading a:hover { color: var(--accent); }
+
+/* ---------- neighborhood hover-overlay tiles: gradient + rounded ---------- */
+.probootstrap-hover-overlay {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.probootstrap-hover-overlay:before {
+  background: linear-gradient(to top, rgba(12,17,24,.72) 0%, rgba(12,17,24,.34) 60%, rgba(12,17,24,.28) 100%);
+}
+.probootstrap-hover-overlay:hover:before {
+  background: linear-gradient(to top, rgba(12,17,24,.62) 0%, rgba(12,17,24,.24) 60%, rgba(12,17,24,.18) 100%);
+}
+.probootstrap-hover-overlay .probootstrap-text-overlay h3 { font-weight: 700; letter-spacing: -.01em; }
+
+/* ---------- background CTA section ---------- */
+.probootstrap-section.probootstrap-bg .heading { font-weight: 700; letter-spacing: -.01em; }
+.probootstrap-section.probootstrap-bg:before { background: rgba(20,26,35,.62); }
+
+/* ---------- property listing cards ---------- */
+.probootstrap-card.probootstrap-listing {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+}
+.probootstrap-card.probootstrap-listing .probootstrap-card-media { overflow: hidden; }
+.probootstrap-card.probootstrap-listing .probootstrap-card-media img {
+  width: 100%;
+  display: block;
+  transition: transform .55s ease;
+}
+.probootstrap-card.probootstrap-listing:hover .probootstrap-card-media img { transform: scale(1.06); }
+.probootstrap-card.probootstrap-listing:focus,
+.probootstrap-card.probootstrap-listing:hover {
+  top: -8px;
+  box-shadow: var(--shadow-hover);
+}
+.probootstrap-card.probootstrap-listing .probootstrap-card-media .probootstrap-love {
+  bottom: 12px;
+  right: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+}
+.probootstrap-card.probootstrap-listing .probootstrap-card-media .probootstrap-love:hover,
+.probootstrap-card.probootstrap-listing .probootstrap-card-media .probootstrap-love:focus,
+.probootstrap-card.probootstrap-listing .probootstrap-card-media .probootstrap-love.active {
+  background: var(--accent);
+  color: #fff;
+}
+.probootstrap-card.probootstrap-listing .probootstrap-card-text .probootstrap-listing-category span {
+  border-radius: 999px;
+  padding: 3px 13px;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+.probootstrap-card.probootstrap-listing .probootstrap-card-text .probootstrap-listing-category.for-sale span { background: #1f9d6b; }
+.probootstrap-card.probootstrap-listing .probootstrap-card-text .probootstrap-listing-category.for-rent span { background: #c65b45; }
+.probootstrap-card.probootstrap-listing .probootstrap-card-text .probootstrap-listing-price strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ---------- agent / person cards ---------- */
+.probootstrap-card.probootstrap-person {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding-bottom: 6px;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.probootstrap-card.probootstrap-person:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+.probootstrap-card.probootstrap-person .probootstrap-card-media img {
+  border: 3px solid var(--accent-soft);
+}
+
+/* ---------- split "half" sections ---------- */
+.probootstrap-half .text {
+  background: linear-gradient(155deg, var(--slate) 0%, var(--slate-2) 100%);
+}
+.probootstrap-half .text .subtitle {
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-weight: 700;
+  font-size: 13px;
+}
+.probootstrap-half .text h3 { font-weight: 700; letter-spacing: -.01em; }
+.probootstrap-half .image { background-color: var(--slate); }
+
+/* ---------- services ---------- */
+.service {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.service:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+.service .icon {
+  border: 2px solid var(--accent-soft);
+  background: var(--accent-soft);
+}
+.service .icon i { color: var(--accent); }
+
+/* ---------- contact form ---------- */
+.probootstrap-form .form-control {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: #fff;
+}
+.probootstrap-form .form-control:active,
+.probootstrap-form .form-control:focus { border-color: var(--accent); }
+.probootstrap-form label { color: var(--text); font-weight: 600; letter-spacing: .04em; }
+.with-icon.colored i { color: var(--accent); }
+#map a { color: var(--accent) !important; }
+
+/* ---------- page title / breadcrumbs (inner hero) ---------- */
+.page-title h1 { font-weight: 600; letter-spacing: -.01em; }
+
+/* ---------- footer: polished solid dark slate ---------- */
+.probootstrap-footer.probootstrap-bg {
+  background: linear-gradient(160deg, var(--slate) 0%, var(--slate-2) 100%) !important;
+  padding: 5.5em 0 3.5em;
+}
+.probootstrap-footer.probootstrap-bg:before { background: transparent; }
+.probootstrap-footer-widget .heading {
+  position: relative;
+  padding-bottom: 14px;
+  margin-bottom: 24px;
+  color: #fff;
+}
+.probootstrap-footer-widget:not(.right) .heading::after {
+  content: "";
+  position: absolute; left: 0; bottom: 0;
+  width: 30px; height: 2px;
+  background: var(--accent);
+}
+.probootstrap-footer.probootstrap-bg a { color: rgba(255,255,255,.58); }
+.probootstrap-footer.probootstrap-bg a:hover { color: #fff; text-decoration: none; }
+.probootstrap-footer.probootstrap-bg .probootstrap-footer-social a:hover { color: var(--accent); }
+.probootstrap-footer form .btn.btn-subscribe {
+  background: var(--accent);
+  border-radius: var(--radius-sm);
+}
+.probootstrap-footer form .btn.btn-subscribe:hover,
+.probootstrap-footer form .btn.btn-subscribe:active,
+.probootstrap-footer form .btn.btn-subscribe:focus {
+  background: #fff;
+  color: var(--slate);
+}
+.probootstrap-footer form .form-control { border-radius: var(--radius-sm); }
+
+/* ---------- back-to-top ---------- */
+.gototop a { background: var(--accent); border-radius: var(--radius-sm); }
+.gototop a:hover, .gototop a:active, .gototop a:focus { background: var(--accent-dark); }
+
+/* ---------- Bootstrap 5 .media shim (defensive; template ships none today) ---------- */
+.media { display: flex; align-items: flex-start; }
+.media > .media-left, .media > .pull-left { flex-shrink: 0; margin-right: 16px; }
+.media > .media-body { flex: 1; min-width: 0; }
+.media .media-object { width: 96px; height: 96px; object-fit: cover; border-radius: var(--radius-sm); display: block; }
