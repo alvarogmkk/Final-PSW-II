@@ -1,0 +1,4 @@
+{% load static %}
+{{ form.diarias|json_script:'diarias-reserva' }}
+<p id="resumo-reserva" role="status" aria-live="polite">Selecione o imóvel e as datas para calcular o total.</p>
+<script src="{% static 'js/reserva.js' %}" defer></script>

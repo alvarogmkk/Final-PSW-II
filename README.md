@@ -12,6 +12,14 @@ categoria, aluguel mensal máximo, quartos e disponibilidade; ordenação e
 paginação. Os novos campos são opcionais para preservar imóveis antigos.
 **O preço mensal é informativo. As reservas existentes continuam por diária.**
 
+Na página inicial, a busca apresenta localização, disponibilidade e ordenação.
+Os filtros completos continuam na listagem de imóveis. Na reserva, os campos
+de relacionamento aparecem como “Locação” e “Pagamento”. O total é calculado
+no servidor pela diária multiplicada pelos dias entre entrada e saída, com
+prévia no formulário. Ao editar, reserva e pagamento são atualizados juntos.
+Os métodos disponíveis são Pix e cartão; essa seleção registra o método,
+sem processar uma cobrança bancária real.
+
 Na pasta `Acasa`, prepare o banco com:
 
 ```powershell

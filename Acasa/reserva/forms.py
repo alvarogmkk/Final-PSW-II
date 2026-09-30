@@ -1,9 +1,12 @@
 from django import forms
+from django.db.models import Q
+from pagamento.models import Pagamento
 
 from .models import Reserva
 
 
 class ReservaForm(forms.ModelForm):
+    metodo_pagamento = forms.ChoiceField(label='Método de pagamento', choices=Pagamento.METODOS, required=False, initial='pix')
     class Meta:
         model = Reserva
         fields = [
@@ -15,14 +18,25 @@ class ReservaForm(forms.ModelForm):
             'fk_pagamento',
         ]
         widgets = {
-            'data_entrada': forms.DateInput(attrs={'type': 'date'}),
-            'data_saida': forms.DateInput(attrs={'type': 'date'}),
+            'data_entrada': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            'data_saida': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
             'valor_total': forms.NumberInput(attrs={'step': '0.01'}),
         }
+        labels = {'fk_locacao': 'Locação', 'fk_pagamento': 'Pagamento', 'valor_total': 'Valor total (R$)'}
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, usuario=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['valor_total'].required = False
+        self.fields['valor_total'].disabled = True
+        self.fields['valor_total'].help_text = 'Calculado automaticamente: diária × quantidade de dias.'
+        self.fields['fk_pagamento'].empty_label = 'Gerar pagamento automaticamente'
+        permitidos = Q(pk=self.instance.fk_pagamento_id) if self.instance.pk else Q(pk__in=[])
+        if usuario and usuario.has_perm('pagamento.change_pagamento'):
+            permitidos |= Q(reserva__isnull=True)
+        self.fields['fk_pagamento'].queryset = Pagamento.objects.filter(permitidos)
+        if self.instance.pk and self.instance.fk_pagamento_id:
+            self.fields['metodo_pagamento'].initial = self.instance.fk_pagamento.metodo
+        self.diarias = {str(pk): str(valor) for pk, valor in self.fields['fk_locacao'].queryset.values_list('pk', 'preco_diaria')}
 
     def clean(self):
         cleaned_data = super().clean()

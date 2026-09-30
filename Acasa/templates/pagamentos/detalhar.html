@@ -7,7 +7,7 @@
             <p><strong>ID:</strong> {{ pagamento.id }}</p>
             <p><strong>Valor:</strong> R$ {{ pagamento.valor }}</p>
             <p><strong>Status:</strong> {{ pagamento.status }}</p>
-            <p><strong>Metodo:</strong> {{ pagamento.metodo }}</p>
+            <p><strong>Metodo:</strong> {{ pagamento.get_metodo_display }}</p>
             <div class="inline-actions">
                 <a href="{% url 'listar_pagamentos' %}" class="button-link secondary">Voltar</a>
                 <a href="{% url 'editar_pagamento' pagamento.id %}" class="button-link">Editar</a>

@@ -10,7 +10,7 @@
             <p><strong>Data de saída:</strong> {{ reserva.data_saida }}</p>
             <p><strong>Valor total:</strong> R$ {{ reserva.valor_total }}</p>
             <p><strong>Status:</strong> {{ reserva.status }}</p>
-            <p><strong>Pagamento:</strong> {{ reserva.fk_pagamento.metodo }} | {{ reserva.fk_pagamento.status }}</p>
+            <p><strong>Pagamento:</strong> {{ reserva.fk_pagamento.get_metodo_display }} | {{ reserva.fk_pagamento.status }}</p>
         </div>
     </section>
 {% endblock %}

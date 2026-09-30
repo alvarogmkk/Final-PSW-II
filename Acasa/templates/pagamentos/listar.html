@@ -23,7 +23,7 @@
                         <td>{{ pagamento.id }}</td>
                         <td>R$ {{ pagamento.valor }}</td>
                         <td>{{ pagamento.status }}</td>
-                        <td>{{ pagamento.metodo }}</td>
+                        <td>{{ pagamento.get_metodo_display }}</td>
                         <td>
                             <a href="{% url 'detalhar_pagamento' pagamento.id %}">Detalhes</a>
                             | <a href="{% url 'editar_pagamento' pagamento.id %}">Editar</a>

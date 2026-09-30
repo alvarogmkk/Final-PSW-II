@@ -19,9 +19,12 @@ def catalogo():
 
 def home(request):
     locacoes = catalogo().filter(disponivel=True)
+    filtros = BuscaLocacaoForm()
+    for campo in ('categoria', 'quartos', 'preco_max'):
+        filtros.fields.pop(campo)
     return render(request, 'home/home.html', {
         'locacoes': locacoes[:6], 'total_imoveis': locacoes.count(),
-        'categorias': Categoria.objects.order_by('nome'), 'filtros': BuscaLocacaoForm(),
+        'categorias': Categoria.objects.order_by('nome'), 'filtros': filtros,
     })
 
 

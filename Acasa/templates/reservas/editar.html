@@ -6,6 +6,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
+            {% include 'reservas/_calculo.html' %}
             <button type="submit">Salvar alteracoes</button>
             <a href="{% url 'detalhar_reserva' reserva.id %}" class="button-link secondary">Cancelar</a>
         </form>

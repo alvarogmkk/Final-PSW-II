@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
+from django.db import transaction
+from decimal import Decimal, ROUND_HALF_UP
 
 from pagamento.models import Pagamento
 from usuario.models import Usuario
@@ -13,20 +15,11 @@ from .models import Reserva
 @login_required
 def criar_reserva(request):
     if request.method == 'POST':
-        form = ReservaForm(request.POST)
+        form = ReservaForm(request.POST, usuario=request.user)
         if form.is_valid():
             reserva = form.save(commit=False)
             reserva.fk_usuario = get_object_or_404(Usuario, pk=request.user.pk)
-            preencher_valor_total(reserva)
-
-            if reserva.fk_pagamento is None:
-                reserva.fk_pagamento = Pagamento.objects.create(
-                    valor=reserva.valor_total,
-                    status='pendente',
-                    metodo='pix',
-                )
-
-            reserva.save()
+            salvar_reserva_com_pagamento(reserva, form.cleaned_data['metodo_pagamento'])
 
             messages.success(request, 'Reserva criada com sucesso!')
             return redirect('listar_reservas')
@@ -36,7 +29,7 @@ def criar_reserva(request):
         if locacao_id:
             initial['fk_locacao'] = locacao_id
 
-        form = ReservaForm(initial=initial)
+        form = ReservaForm(initial=initial, usuario=request.user)
 
     return render(request, 'reservas/criar.html', {'form': form})
 
@@ -77,15 +70,14 @@ def editar_reserva(request, id):
         return HttpResponseForbidden('Você não tem permissão para editar esta reserva.')
 
     if request.method == 'POST':
-        form = ReservaForm(request.POST, instance=reserva)
+        form = ReservaForm(request.POST, instance=reserva, usuario=request.user)
         if form.is_valid():
             reserva = form.save(commit=False)
-            preencher_valor_total(reserva)
-            reserva.save()
+            salvar_reserva_com_pagamento(reserva, form.cleaned_data['metodo_pagamento'])
             messages.success(request, 'Reserva atualizada com sucesso!')
             return redirect('detalhar_reserva', id=reserva.id)
     else:
-        form = ReservaForm(instance=reserva)
+        form = ReservaForm(instance=reserva, usuario=request.user)
 
     return render(request, 'reservas/editar.html', {'form': form, 'reserva': reserva})
 
@@ -105,8 +97,18 @@ def excluir_reserva(request, id):
     return render(request, 'reservas/excluir.html', {'reserva': reserva})
 
 def preencher_valor_total(reserva):
-    if reserva.valor_total:
-        return
-
     dias = (reserva.data_saida - reserva.data_entrada).days
-    reserva.valor_total = dias * reserva.fk_locacao.preco_diaria
+    reserva.valor_total = (Decimal(str(reserva.fk_locacao.preco_diaria)) * dias).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
+
+@transaction.atomic
+def salvar_reserva_com_pagamento(reserva, metodo):
+    preencher_valor_total(reserva)
+    pagamento = reserva.fk_pagamento
+    if pagamento is None:
+        pagamento = Pagamento(status='pendente')
+    pagamento.valor = reserva.valor_total
+    pagamento.metodo = metodo or pagamento.metodo or 'pix'
+    pagamento.save()
+    reserva.fk_pagamento = pagamento
+    reserva.save()
